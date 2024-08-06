@@ -17,7 +17,8 @@ int printColorMap() {
     return i * j;
 }
 
-static void _convertStrStreamToStrList(std::stringstream strStream, std::vector<std::string>& strList) {
+static void _convertStrStreamToStrList(std::stringstream strStream,
+    std::vector<std::string>& strList) {
     strList.clear();
 
     while (strStream.good()) {
@@ -39,8 +40,7 @@ static void _getColorMapOutputLines(std::vector <std::string>& outputLines) {
     _convertStrStreamToStrList(std::stringstream(outputStream.str()), outputLines);
 }
 
-static bool _checkContents(const std::vector <std::string>& outputList)
-{
+static bool _checkContents(const std::vector <std::string>& outputList) {
     bool contentPresent = true;
     int listIndex = 0;
     for (int i = 0; i < 5 && contentPresent; ++i)
