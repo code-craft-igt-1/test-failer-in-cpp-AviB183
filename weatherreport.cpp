@@ -4,10 +4,8 @@
 
 using namespace std;
 
-namespace WeatherSpace
-{
-	class IWeatherSensor
-	{
+namespace WeatherSpace {
+	class IWeatherSensor {
 	public:
 		virtual double TemperatureInC() const = 0;
 		virtual int Precipitation() const = 0;
@@ -20,8 +18,7 @@ namespace WeatherSpace
 	/// test the other parts of this application in isolation
 	/// without needing the actual Sensor during development
 
-	class SensorStub : public IWeatherSensor
-	{
+	class SensorStub : public IWeatherSensor {
 		int m_humidity;
 		int m_precipitation;
 		double m_temperature;
@@ -33,27 +30,21 @@ namespace WeatherSpace
 			m_humidity(humidity),
 			m_precipitation(precipitation),
 			m_temperature(temperature),
-			m_windSpeed(windSpeed)
-		{
-		}
+			m_windSpeed(windSpeed) {}
 
-		int Humidity() const override
-		{
+		int Humidity() const override {
 			return m_humidity;
 		}
 
-		int Precipitation() const override
-		{
+		int Precipitation() const override {
 			return m_humidity;
 		}
 
-		double TemperatureInC() const override
-		{
+		double TemperatureInC() const override {
 			return m_temperature;
 		}
 
-		int WindSpeedKMPH() const override
-		{
+		int WindSpeedKMPH() const override {
 			return m_windSpeed;
 		}
 	};
@@ -61,14 +52,12 @@ namespace WeatherSpace
 	// This is a function to predict the weather, based on readings
 	// from a sensor
 
-	string Report(const IWeatherSensor& sensor)
-	{
+	string Report(const IWeatherSensor& sensor) {
 		int precipitation = sensor.Precipitation();
 		// precipitation < 20 is a sunny day
 		string report = "Sunny day";
 
-		if (sensor.TemperatureInC() > 25)
-		{
+		if (sensor.TemperatureInC() > 25) {
 			if (precipitation >= 20 && precipitation < 60)
 				report = "Partly cloudy";
 			else if (sensor.WindSpeedKMPH() > 50)
@@ -79,8 +68,7 @@ namespace WeatherSpace
 
 	// Test a rainy day
 
-	void TestRainy()
-	{
+	void TestRainy() {
 		SensorStub sensor;
 		string report = Report(sensor);
 		cout << report << endl;
@@ -89,8 +77,7 @@ namespace WeatherSpace
 
 	// Test another rainy day
 
-	void TestHighPrecipitationAndLowWindspeed()
-	{
+	void TestHighPrecipitationAndLowWindspeed() {
 		// This instance of stub needs to be different-
 		// to give high precipitation (>60) and low wind-speed (<50)
 		SensorStub sensor(0, 70, 30.0, 45);
@@ -102,8 +89,7 @@ namespace WeatherSpace
 	}
 }  // namespace WeatherSpace
 
-int main()
-{
+int main() {
 	WeatherSpace::TestRainy();
 	WeatherSpace::TestHighPrecipitationAndLowWindspeed();
 	cout << "All is well (maybe)\n";
