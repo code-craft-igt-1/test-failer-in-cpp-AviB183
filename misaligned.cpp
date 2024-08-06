@@ -18,22 +18,22 @@ int printColorMap() {
 }
 
 static void _convertStrStreamToStrList(std::stringstream strStream,
-    std::vector<std::string>& strList) {
-    strList.clear();
+    std::vector<std::string>* strList) {
+    (*strList).clear();
 
     while (strStream.good()) {
         std::string singleLine;
         getline(strStream, singleLine);
-        strList.push_back(singleLine);
+        (*strList).push_back(singleLine);
     }
 }
 
-static void _getColorMapOutputLines(std::vector <std::string>& outputLines) {
+static void _getColorMapOutputLines(std::vector <std::string>* outputLines) {
     std::ostringstream outputStream;
     std::streambuf* coutBuffBackup = std::cout.rdbuf();
     std::cout.rdbuf(outputStream.rdbuf());
 
-    int result = printColorMap();
+    printColorMap();
 
     std::cout.rdbuf(coutBuffBackup);
 
@@ -60,7 +60,7 @@ static bool _checkFormat(const std::vector <std::string>& outputList, const char
     size_t pos2 = outputList[0].find(delim, pos1 + 1);
     formatIsCorrect = (pos1 != std::string::npos && pos2 != std::string::npos);
 
-    for (int i = 0; i < outputList.size() && formatIsCorrect; ++i)
+    for (size_t i = 0; i < outputList.size() && formatIsCorrect; ++i)
         formatIsCorrect = (outputList[i][pos1] == delim && outputList[i][pos2] == delim);
 
     return formatIsCorrect;
@@ -68,7 +68,7 @@ static bool _checkFormat(const std::vector <std::string>& outputList, const char
 
 int main() {
     std::vector <std::string> outputLines;
-    _getColorMapOutputLines(outputLines);
+    _getColorMapOutputLines(&outputLines);
 
     assert(outputLines.size() == 25);
     assert(_checkContents(outputLines) == true);

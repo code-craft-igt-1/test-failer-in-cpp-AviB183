@@ -4,7 +4,7 @@
 
 namespace WeatherSpace {
 class IWeatherSensor {
-public:
+ public:
     virtual double TemperatureInC() const = 0;
     virtual int Precipitation() const = 0;
     virtual int Humidity() const = 0;
@@ -22,7 +22,7 @@ class SensorStub : public IWeatherSensor {
     double m_temperature;
     int m_windSpeed;
 
-public:
+ public:
     explicit SensorStub(int humidity = 72, int precipitation = 70,
         double temperature = 26.0, int windSpeed = 52) :
         m_humidity(humidity),
